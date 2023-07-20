@@ -1,0 +1,230 @@
+paths:
+  /api/products/:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: "consultar por todos los productos" 
+      tags:
+        - Products
+      responses:
+        "200":
+          description: "productos obtenidos"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Products' 
+        "500":
+          description: "error del servidor al obtener los productos"
+    post:
+      security: 
+        - bearerAuth: []
+      tags:
+        - Products
+      summary: "Dar de alta un Producto"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                title:
+                  type: string
+                description: 
+                  type: string
+                price:
+                  type: double
+                thumpbnail:
+                  type: string  
+                code: 
+                  type: number
+                stock:
+                  type: number
+                status:
+                  type: boolean
+                category:
+                  type: string
+                  default: 'mediano'
+                owner: 
+                  type: string
+                  default: 'admin'
+      responses:
+        "200" :
+           description: "Se dio de alta el producto"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/Products' 
+        "400" :
+           description: "Error en creacion del producto"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/Products' 
+
+        "500" :
+           description: "error del servidor no se pudo dar de alta el producto" 
+
+  
+
+  /api/products/{uid}:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: "Obtener un producto por su Id"
+      tags:
+        - Products
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: id del producto solicitado
+        schema:
+          $type: String
+      responses:
+        "200" :
+           description: "retorna el producto encontrado"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/Products' 
+        "220" :
+           description: "No se encontro el producto"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/Products' 
+        "500" :
+           description: "error del servidor al buscar el producto" 
+    put:
+      security: 
+        - bearerAuth: []
+      summary: "Modificar un producto por su Id"
+      tags:
+        - Products
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: id del producto para modificar
+        schema:
+          $type: String
+      responses:
+        "200" :
+           description: "Se modifico el producto"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/Products' 
+        "220" :
+           description: "Producto no encontrado" 
+        "230" :
+           description: "No tiene permisos para modificar el producto" 
+        "400" :
+           description: "Error en la modificacion del producto " 
+        "500" :
+           description: "error del servidor al modificar el producto" 
+
+    delete:
+      security: 
+        - bearerAuth: []
+      summary: "Elimina un producto por su Id"
+      tags:
+        - Products
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: id del producto para eliminar
+        schema:
+          $type: String
+      responses:
+        "200" :
+           description: "Se elimino el producto"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/Products' 
+        "220" :
+           description: "producto no encontrado" 
+        "400" :
+           description: "Error con la eliminacion del producto" 
+        "500" :
+           description: "Error en el servidor al eliminar el prodducto" 
+
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado
+        title:
+          type: String
+          description: Nombre del Producto
+          require: true
+          index: true
+        description: 
+          type: String
+          description: descripcion adicional del Producto
+          require: true
+          index: true
+        price:
+          type: Double
+          description: precio de venta unitario del Producto
+          require: true
+        thumpbnail:
+          type: String
+          description: direccion http de la imagen del producto
+        code: 
+          type: Number
+          description: codigo interno del Producto
+          require: true
+        stock:
+          type: Number
+          description: stock para la venta del Producto
+        status: 
+          type: Boolean
+          description: indica si el producto esta activo
+        category:
+          type: String
+          description: clasificacion de los productos por tamaño
+          index: true
+          require: true
+          enum:
+            - grande
+            - mediano
+            - chico
+          default: 'mediano'
+        owner: 
+          type: String
+          description: email del usuario que dio de alta el producto
+          index: true
+          default: 'admin'
+      example:
+        _id: ObjectId("64177e31928ff49eb612cc02")
+        title: "Capel reservado clasico 700ml"
+        description: ""
+        price: 4200
+        thumpbnail: ""
+        code: 4
+        stock: 300
+        status: true
+        category: "mediano"
+        owner: "admin"
+

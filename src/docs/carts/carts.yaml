@@ -1,0 +1,343 @@
+paths:
+  /api/carts:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: "traer todos los productos del carrito " 
+      tags:
+        - Carts
+      responses:
+        "200" :
+           description: "Se trajeron todos los productos"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/products' 
+        "220" :
+           description: " carrito no encontrado" 
+        "400" :
+           description: "Error en el proceso de traer todos los productos" 
+        "500" :
+           description: "Error en el servidor al traer todos los productos" 
+    post:
+      security: 
+        - bearerAuth: []
+      tags:
+        - Carts
+      summary: "Cear un Carrito vacio"
+      parameters:
+        - name: cart
+          in: body
+          description: se agrega al carrito sin productos
+          required: true
+          schema:
+            $ref: '#/components/schemas/carts'
+    
+      responses:
+        "200" :
+           description: "Se creo el carrito"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 products:
+                   $ref: '#/components/schemas/carts' 
+        "400" :
+           description: "Error en el proceso de creacion del carrito"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 products:
+                   $ref: '#/components/schemas/carts' 
+
+        "500" :
+           description: "error del servidor no se pudo dar de alta el carrito" 
+
+  /api/carts/{cid}/products/{pid}:
+    delete:
+      security: 
+        - bearerAuth: []
+      summary: "Elimina un producto determinado con id: pid del carrito de id: cid" 
+      tags:
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: String
+      - name: pid
+        in: path
+        required: true
+        description: id del producto
+        schema:
+          $type: String
+
+      responses:
+        "200" :
+           description: "Se elimino el producto"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/carts' 
+        "220" :
+           description: "producto no encontrado" 
+        "400" :
+           description: "Error en el proceso de eliminacion del producto" 
+        "500" :
+           description: "Error en el servidor al eliminar el prodducto" 
+    put:
+      security: 
+        - bearerAuth: []
+      summary: "carga un producto al carrito con cantidad" 
+      tags:
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: String
+      - name: pid
+        in: path
+        required: true
+        description: id del producto
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                cant:
+                  type: number
+
+
+      responses:
+        "200" :
+           description: "Se actualizo el  producto"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/carts' 
+        "220" :
+           description: " Error al actualizar el producto" 
+        "400" :
+           description: "Error con el proceso de actualizacion del producto" 
+        "500" :
+           description: "Error en el servidor al actualizar el producto" 
+
+  /api/carts/{cid}:
+    delete:
+      security: 
+        - bearerAuth: []
+      summary: "Elimina todos los productos del carrito de id: cid" 
+      tags:
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: String
+
+      responses:
+        "200" :
+           description: "Se eliminaron todos los productos"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/carts' 
+        "220" :
+           description: " carrito no encontrado" 
+        "400" :
+           description: "Error con el proceso de eliminacion de los productos" 
+        "500" :
+           description: "Error en el servidor al eliminar todos los productos" 
+    put:
+      security: 
+        - bearerAuth: []
+      summary: "actualiza el carrito de id cid  con todos todos los productos del body " 
+      tags:
+        - Carts
+      parameters:
+      - name: cid
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                products:
+                  type: array
+                  properties:            
+                    item: 
+                      type: object
+                      properties:
+                        title:
+                          type: String
+                          description: Nombre del Producto
+                          require: true
+                          index: true
+                        description: 
+                          type: String
+                          description: descripcion adicional del Producto
+                          require: true 
+                          index: true
+                        price:
+                          type: Double
+                          description: precio de venta unitario del Producto
+                          require: true
+                        thumpbnail:
+                          type: String
+                          description: direccion http de la imagen del producto
+                        code: 
+                          type: Number
+                          description: codigo interno del Producto
+                          require: true
+                        stock:
+                          type: Number
+                          description: stock para la venta del Producto
+                        status: 
+                          type: Boolean
+                          description: indica si el producto esta activo
+                        category:
+                          type: String
+                          description: clasificacion de los productos por tamaño
+                          require: true
+                          enum:
+                           - grande
+                           - mediano
+                           - chico
+                          default: 'mediano'
+                        owner: 
+                          type: String
+                          description: email del usuario que dio de alta el producto
+                          index: true
+                          default: 'admin'
+                    cant: 
+                      type: Number
+
+
+      responses:
+        "200" :
+           description: "Se actualizaron todos los productos"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/products' 
+        "220" :
+           description: " Error al actualizar el carrito" 
+        "400" :
+           description: "Error en el proceso de actualizacion de los productos" 
+        "500" :
+           description: "Error en el servidor al actualizar todos los productos" 
+
+components:
+  schemas:
+    carts:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado
+        products:
+            type: array
+            properties:            
+              item: 
+                type: object
+                properties:
+                  prodId: 
+                    type: Schema.Types.ObjectId
+                    $ref: '#/components/schemas/products'
+                    required: true
+                  cant: 
+                    type: Number
+      example:
+        _id: ObjectId("641749fasdfda2")
+        products: [{}]
+        cant:
+
+    products:
+      type: object
+      properties:
+        title:
+          type: String
+          description: Nombre del Producto
+          require: true
+          index: true
+        description: 
+          type: String
+          description: descripcion adicional del Producto
+          require: true
+          index: true
+        price:
+          type: Double
+          description: precio de venta unitario del Producto
+          require: true
+        thumpbnail:
+          type: String
+          description: direccion http de la imagen del producto
+        code: 
+          type: Number
+          description: codigo interno del Producto
+          require: true
+        stock:
+          type: Number
+          description: stock para la venta del Producto
+        status: 
+          type: Boolean
+          description: indica si el producto esta activo
+        category:
+          type: String
+          description: clasificacion de los productos por tamaño
+          index: true
+          require: true
+          enum:
+            - grande
+            - mediano
+            - chico
+          default: 'mediano'
+        owner: 
+          type: String
+          description: email del usuario que dio de alta el producto
+          index: true
+          default: 'admin'
+
+      example:
+         _id: ObjectId("64177e31928ff49eb612cc02")
+         products: [{
+           title: "Capel reservado clasico 700ml",
+           description: "",
+           price: 4200,
+           thumpbnail: "",
+           code: 4,
+           stock: 300,
+           status: true,
+           category: "mediano",
+           owner: "admin"
+         }]
+         cant: 5
+

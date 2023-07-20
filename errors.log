@@ -1,0 +1,25 @@
+warning: Alerta!
+error: No se puede logear el usuario por error: User logged error: Error login user
+error: No se puede logear el usuario por User logged error: Error login user
+error: Usuario de email pepe@aa.com no encontrado
+error: Usuario de email pepe@aa.com no encontrado
+error: No se puede logear el usuario por User logged error: Error login user
+error: No se puede logear el usuario por User logged error: Error login user
+error: Usuario de email 55444 no encontrado
+error: No se puede crear el usuario por falta de algun dato pedido (irst_name, last_name, email, age, password)
+error: No se puede crear el usuario por falta de algun dato pedido (irst_name, last_name, email, age, password)
+error: No se puede resetear la clave por ReferenceError: passwordData is not defined
+error: No se puede resetear la clave por ReferenceError: Cannot access 'user' before initialization
+error: No se puede logear el usuario por User logged error: Error login user
+error: No se puede logear el usuario por User logged error: Error login user
+error: No se puede logear el usuario por User logged error: Error login user
+error: No se puede resetear la clave por ReferenceError: passwordData is not defined
+error: No se puede crear el usuario por falta de algun dato pedido (first_name, last_name, email, age, password)
+error: No se puede registrar el usuario por User created error: Error trying to create user
+error: No se puede logear el usuario por User logged error: Error login user
+error: Error en la coneccion a al base de datos CastError: Cast to ObjectId failed for value "10" (type string) at path "_id" for model "users"
+error: Error en la coneccion a al base de datos CastError: Cast to ObjectId failed for value "10" (type string) at path "_id" for model "users"
+error: Error en la coneccion a al base de datos CastError: Cast to ObjectId failed for value "10" (type string) at path "_id" for model "users"
+error: Usuario de email carmona_horacio@hotmail.com no encontrado
+error: No se puede logear el usuario por User logged error: Error login user
+error: No se puede logear el usuario por User logged error: Error login user

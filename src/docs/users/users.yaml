@@ -1,0 +1,90 @@
+paths:
+  /api/users/:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: "consultar por todos los usuarios" 
+      tags:
+        - Users
+      responses:
+        "200":
+          description: "usuarios obtenidos"
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Users' 
+        "500":
+          description: "error del servidor al obtener los usuarios"
+  /api/users/{uid}:
+    get:
+      security: 
+        - bearerAuth: []
+      summary: "Obtener un usuario por su Id"
+      tags:
+        - Users
+      parameters:
+      - name: uid
+        in: path
+        required: true
+        description: id del ususario solicitado
+        schema:
+          $type: String
+      responses:
+        "200" :
+           description: "Se encontro el usuario"
+           content:
+             application/json:
+               schema: 
+                 type: array
+                 items:
+                   $ref: '#/components/schemas/Users' 
+
+        "500" :
+           description: "error del servidor al buscar el ususario" 
+
+components:
+  schemas:
+    Users:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado
+        first_name: 
+          type: String
+          description: Nombre del Usuario
+        last_name: 
+          type: String
+          description: Apellido del Usuario
+        email: 
+          type: String
+          description: Email unico del Usuario
+        age: 
+          type: Number
+          description: Edad del Usuario
+        password: 
+          type: String
+          description: Clave del Usuario
+        rol: 
+          type: String
+          description: rol del Usuario
+        id_Cart: 
+          type: ObjectId
+          description: Id de Carrito
+      example:
+        _id: ObjectId("134hjv213")
+        first_name: Horacio
+        last_name: Carmona
+        email: carmona_horacio@hotmail.com
+        password: 1324gadsfh
+        age: 59
+        rol: user
+        id_Cart: ObjectId("13sdfg4hjv213")
+
+  # securitySchemes:
+  #   bearerAuth:
+  #   type: http
+  #   scheme: bearer
+  #   bearerFormat: JWT
