@@ -84,7 +84,7 @@ const fileStorage = fileStore(session);
 // }
 
 //await connectionMongoose().then(connect=>console.log('mongoose conectado'));
-console.log("seleccion",process.env.SELECTEDBDD)
+console.log("seleccion base de datos",process.env.SELECTEDBDD)
 switch (parseInt(process.env.SELECTEDBDD)) {
   case 1:
     await connectionMongoose().then(connect=>console.log('mongoose conectado'))
